@@ -63,7 +63,9 @@
 			<then>
 				<execute function="Check" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 
-				<execute macro="PortletEntry#save" />
+				<execute function="Click" locator1="Button#SAVE" value1="Save" />
+
+				<execute function="AssertVisible" locator1="Message#SUCCESS" />
 
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Content Sharing" />
@@ -76,7 +78,9 @@
 				<then>
 					<execute function="Uncheck#clickAt" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 
-					<execute macro="PortletEntry#save" />
+					<execute function="Click" locator1="Button#SAVE" value1="Save" />
+
+					<execute function="AssertVisible" locator1="Message#SUCCESS" />
 
 					<execute macro="Panel#expandPanel">
 						<var name="panelHeading" value="Content Sharing" />
@@ -545,9 +549,11 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
+		<execute macro="Panel#expandSubpanel">
 			<var name="panelHeading" value="Users" />
 		</execute>
+
+		<execute function="ScrollBy" value1="0, 400" />
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
 
@@ -561,7 +567,9 @@
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
 
-		<execute macro="PortletEntry#save" />
+		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 
 		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
 			<var name="enableAcrossSite" value="true" />
