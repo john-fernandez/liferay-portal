@@ -2129,11 +2129,21 @@
 			<then>
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
-				<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+				<execute macro="User#searchCP">
+					<var name="searchTerm" value="Test Test" />
+				</execute>
+
+				<execute function="Uncheck" locator1="ContentRow#ENTRY_CONTENT_ROW_1_CHECKBOX" />
+
+				<execute macro="User#searchCP">
+					<var name="searchTerm" value="" />
+				</execute>
+
+				<execute function="ClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
 
 				<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute function="AssertVisible" locator1="Message#SUCCESS" />
 			</then>
 		</if>
 
@@ -2152,7 +2162,7 @@
 
 				<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
 
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute function="AssertVisible" locator1="Message#SUCCESS" />
 			</then>
 		</if>
 	</command>
