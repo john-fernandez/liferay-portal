@@ -85,6 +85,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SUBPANEL_HEADING-->
+<tr>
+	<td>SUBPANEL_HEADING_COLLAPSED</td>
+	<td>//div[contains(@class,'panel-title')]/a[contains(.,'${key_panelHeading}') and contains(@aria-expanded,'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBPANEL_HEADING_EXPANDED</td>
+	<td>//div[contains(@class,'panel-title')]/a[contains(.,'${key_panelHeading}') and contains(@aria-expanded,'true')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
