@@ -140,6 +140,26 @@
 	</command>
 
 	<command name="addUser">
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="${userEmailAddress}" />
+		</execute>
+
+		<if>
+			<not>
+				<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			</not>
+			<then>
+				<execute macro="JSONUser#addUserJSON">
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userFirstName" value="${userFirstName}" />
+					<var name="userLastName" value="${userLastName}" />
+					<var name="userScreenName" value="${userScreenName}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="addUserJSON">
 		<if>
 			<not>
 				<isset var="userEmailAddress" />
