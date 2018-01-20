@@ -116,6 +116,38 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addCP">
+		<var name="bUserExists" value="false" />
+
+		<if>
+			<equals arg1="${userScreenName}" arg2="usersn" />
+			<then>
+				<execute macro="User#checkIfUserExists">
+					<return from="userExists" name="bUserExists" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userScreenName" value="${userScreenName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${bUserExists}" arg2="false" />
+			<then>
+				<execute macro="User#addUserCP">
+					<var name="userBirthday" value="${userBirthday}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
+					<var name="userFirstName" value="${userFirstName}" />
+					<var name="userGender" value="${userGender}" />
+					<var name="userLastName" value="${userLastName}" />
+					<var name="userMiddleName" value="${userMiddleName}" />
+					<var name="userScreenName" value="${userScreenName}" />
+					<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="addCreateAccountPG">
 		<execute macro="User#createAccount">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1052,6 +1084,23 @@
 					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
 			</else>
+		</if>
+	</command>
+
+	<command name="checkIfUserExists" returns="userExists">
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="${userEmailAddress}" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<execute macro="User#gotoEditCP">
+					<var name="userScreenName" value="${userScreenName}" />
+				</execute>
+
+				<return name="userExists" value="true" />
+			</then>
 		</if>
 	</command>
 
