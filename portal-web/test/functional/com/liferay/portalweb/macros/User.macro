@@ -116,6 +116,20 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addCP">
+		<execute macro="User#addUserCP">
+			<var name="userBirthday" value="${userBirthday}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userGender" value="${userGender}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
+		</execute>
+	</command>
+
 	<command name="addCreateAccountPG">
 		<execute macro="User#createAccount">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
