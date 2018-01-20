@@ -1,4 +1,5 @@
 <definition>
+	<var name="demoUser" value="usersn" />
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="test@liferay.com" />
 
@@ -114,6 +115,31 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addCP">
+		<execute macro="User#checkIfUserExists">
+			<return from="userExists" name="bUserExists" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${bUserExists}" arg2="false" />
+			<then>
+				<execute macro="User#addUserCP">
+					<var name="userBirthday" value="${userBirthday}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
+					<var name="userFirstName" value="${userFirstName}" />
+					<var name="userGender" value="${userGender}" />
+					<var name="userLastName" value="${userLastName}" />
+					<var name="userMiddleName" value="${userMiddleName}" />
+					<var name="userScreenName" value="${userScreenName}" />
+					<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="addCreateAccountPG">
@@ -275,48 +301,81 @@
 	</command>
 
 	<command name="addReservedEmailAddressCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="User#checkIfUserExists">
+			<return from="userExists" name="bUserExists" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+		<if>
+			<equals arg1="${bUserExists}" arg2="false" />
+			<then>
+				<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Button#clickSave" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+				<execute macro="Button#clickSave" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The email address you requested is reserved." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The email address you requested is reserved." />
+			</then>
+		</if>
 	</command>
 
 	<command name="addReservedScreenNameCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="User#checkIfUserExists">
+			<return from="userExists" name="bUserExists" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+		<if>
+			<equals arg1="${bUserExists}" arg2="false" />
+			<then>
+				<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Button#clickSave" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+				<execute macro="Button#clickSave" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The screen name you requested is reserved." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The screen name you requested is reserved." />
+			</then>
+		</if>
 	</command>
 
 	<command name="addScreenNameNumberSiteIdCP">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="User#checkIfUserExists">
+			<return from="userExists" name="bUserExists" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${siteID}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+		<if>
+			<equals arg1="${bUserExists}" arg2="false" />
+			<then>
+				<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Button#clickSave" />
+				<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${siteID}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+				<execute macro="Button#clickSave" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The screen name cannot contain only numeric values." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The screen name cannot contain only numeric values." />
+			</then>
+		</if>
 	</command>
 
 	<command name="addSMSViaMyAccount">
@@ -1041,6 +1100,30 @@
 				</execute>
 			</else>
 		</if>
+	</command>
+
+	<command name="checkIfUserExists" returns="userExists">
+		<if>
+			<equals arg1="${userScreenName}" arg2="${demoUser}" />
+			<then>
+				<execute macro="User#searchCP">
+					<var name="searchTerm" value="${userEmailAddress}" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+					<then>
+						<execute macro="User#gotoEditCP">
+							<var name="userScreenName" value="${userScreenName}" />
+						</execute>
+
+						<return name="userExists" value="true" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<return name="userExists" value="false" />
 	</command>
 
 	<command name="createAccount">
