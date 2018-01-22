@@ -1033,6 +1033,22 @@
 		</if>
 	</command>
 
+	<command name="checkIfUserExists" returns="userExists">
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="${userEmailAddress}" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<return name="userExists" value="true" />
+			</then>
+			<else>
+				<return name="userExists" value="false" />
+			</else>
+		</if>
+	</command>
+
 	<command name="createAccount">
 		<execute macro="SignInNavigator#gotoCreateAccount" />
 
