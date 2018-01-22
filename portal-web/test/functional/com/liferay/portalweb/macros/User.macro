@@ -192,17 +192,34 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="User#_addCP">
-			<var name="userBirthday" value="${userBirthday}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-		</execute>
+		<var name="usersnExists" value="false" />
+
+		<if>
+			<equals arg1="${userScreenName}" arg2="usersn" />
+			<then>
+				<execute macro="User#checkIfUserExists">
+					<return from="userExists" name="usersnExists" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${usersnExists}" arg2="false" />
+			<then>
+				<execute macro="User#_addCP">
+					<var name="userBirthday" value="${userBirthday}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
+					<var name="userFirstName" value="${userFirstName}" />
+					<var name="userGender" value="${userGender}" />
+					<var name="userLastName" value="${userLastName}" />
+					<var name="userMiddleName" value="${userMiddleName}" />
+					<var name="userScreenName" value="${userScreenName}" />
+					<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="addCreateAccountPG">
