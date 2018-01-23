@@ -176,7 +176,7 @@
 			</then>
 		</if>
 
-		<execute macro="User#checkIfUserExists">
+		<execute macro="JSONUser#checkIfUserExists">
 			<return from="userExists" name="bUserExists" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
@@ -191,6 +191,27 @@
 					<var name="userLastName" value="${userLastName}" />
 					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="checkIfUserExists" returns="userExists">
+		<return name="userExists" value="false" />
+
+		<if>
+			<equals arg1="${userScreenName}" arg2="${demoUser}" />
+			<then>
+				<execute macro="JSONUser#getUserIdByEmailAddress">
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<return from="userId" name="userId" />
+				</execute>
+
+				<if>
+						<isset var="userId" />
+					<then>
+						<return name="userExists" value="true" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</command>
