@@ -2,6 +2,81 @@
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="test@liferay.com" />
 
+	<command name="_addCP">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+
+		<if>
+			<isset var="userBirthday" />
+			<then>
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthday}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userGender" />
+			<then>
+				<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
+
+		<if>
+			<equals arg1="${userEmailAddressVariation}" arg2="Invalid" />
+			<then>
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#EMAIL_ADDRESS_FIELD_ALERT" value1="Please enter a valid email address." />
+			</then>
+			<elseif>
+				<equals arg1="${userEmailAddressVariation}" arg2="Null" />
+				<then>
+					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#EMAIL_ADDRESS_FIELD_ALERT" value1="This field is required." />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${userEmailAddressVariation}" arg2="Root" />
+				<then>
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
+				<then>
+					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._." />
+				</then>
+			</elseif>
+			<else>
+				<execute macro="Alert#viewSuccessMessage" />
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+
+				<if>
+					<isset var="userMiddleName" />
+					<then>
+						<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+					</then>
+				</if>
+
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="acceptEndUserLicenseAgreement">
 		<if>
 			<condition function="IsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
@@ -117,77 +192,33 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<var name="usersnExists" value="false" />
 
 		<if>
-			<isset var="userBirthday" />
+			<equals arg1="${userScreenName}" arg2="usersn" />
 			<then>
-				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthday}" />
+				<execute macro="User#checkIfUserExists">
+					<return from="userExists" name="usersnExists" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
-			<isset var="userMiddleName" />
+			<equals arg1="${usersnExists}" arg2="false" />
 			<then>
-				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+				<execute macro="User#_addCP">
+					<var name="userBirthday" value="${userBirthday}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
+					<var name="userFirstName" value="${userFirstName}" />
+					<var name="userGender" value="${userGender}" />
+					<var name="userLastName" value="${userLastName}" />
+					<var name="userMiddleName" value="${userMiddleName}" />
+					<var name="userScreenName" value="${userScreenName}" />
+					<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
+				</execute>
 			</then>
-		</if>
-
-		<if>
-			<isset var="userGender" />
-			<then>
-				<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
-			</then>
-		</if>
-
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
-
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
-
-		<if>
-			<equals arg1="${userEmailAddressVariation}" arg2="Invalid" />
-			<then>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#EMAIL_ADDRESS_FIELD_ALERT" value1="Please enter a valid email address." />
-			</then>
-			<elseif>
-				<equals arg1="${userEmailAddressVariation}" arg2="Null" />
-				<then>
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#EMAIL_ADDRESS_FIELD_ALERT" value1="This field is required." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${userEmailAddressVariation}" arg2="Root" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
-				<then>
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._." />
-				</then>
-			</elseif>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
-
-				<if>
-					<isset var="userMiddleName" />
-					<then>
-						<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
-					</then>
-				</if>
-
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
-			</else>
 		</if>
 	</command>
 
@@ -1015,6 +1046,22 @@
 					<var name="userEmailAddress" value="test@liferay.com" />
 					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="checkIfUserExists" returns="userExists">
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="${userEmailAddress}" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<return name="userExists" value="true" />
+			</then>
+			<else>
+				<return name="userExists" value="false" />
 			</else>
 		</if>
 	</command>

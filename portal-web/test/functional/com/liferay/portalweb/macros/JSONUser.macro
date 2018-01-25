@@ -176,12 +176,29 @@
 			</then>
 		</if>
 
-		<execute macro="JSONUser#_addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="usersnExists" value="false" />
+
+		<if>
+			<equals arg1="${userScreenName}" arg2="usersn" />
+			<then>
+				<execute macro="User#checkIfUserExists">
+					<return from="userExists" name="usersnExists" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${usersnExists}" arg2="false" />
+			<then>
+				<execute macro="JSONUser#_addUser">
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userFirstName" value="${userFirstName}" />
+					<var name="userLastName" value="${userLastName}" />
+					<var name="userScreenName" value="${userScreenName}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="deleteUserByEmailAddress">
