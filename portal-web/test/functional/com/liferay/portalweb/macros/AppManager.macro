@@ -80,11 +80,11 @@
 			</then>
 		</while>
 
-		<execute function="Pause" locator1="3000" />
+		<!-- <execute function="Pause" locator1="3000" />
 
 		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error initializing Spring for ${appName}" />
 		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering hook for ${appName}" />
-		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering portlets for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering portlets for ${appName}" /> -->
 	</command>
 
 	<command name="viewAppCP">
