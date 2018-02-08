@@ -38,10 +38,78 @@
 		<execute function="Pause" locator1="15000" />
 	</command>
 
+	<command name="uploadAppCP">
+		<var name="key_appName" value="${appName}" />
+
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Upload">
+			<var name="key_menuItem" value="Upload" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertElementPresent" locator1="Button#BROWSE" />
+
+		<execute function="Click" locator1="Button#BROWSE" />
+
+		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${warFileName}" />
+
+		<execute macro="Button#clickInstall" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS_3" value1="The plugin was uploaded successfully and is now being installed." />
+
+		<execute function="SelectFrame#selectFrameTop" />
+
+		<execute function="Click" locator1="Modal#CLOSE_BUTTON" />
+
+		<while>
+			<condition function="AssertConsoleTextNotPresent" value1="STARTED ${appName}" />
+			<then>
+				<execute function="Pause" locator1="1000" />
+				<var method="MathUtil#sum('${uploadTime}', '1')" name="uploadTime" />
+
+				<if>
+					<equals arg1="${uploadTime}" arg2="30" />
+					<then>
+						<fail message="Manual app installation exceeded 30s. Please check status in console." />
+					</then>
+				</if>
+			</then>
+		</while>
+
+		<!-- <execute function="Pause" locator1="3000" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error initializing Spring for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering hook for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering portlets for ${appName}" /> -->
+	</command>
+
 	<command name="viewAppCP">
 		<var name="key_appName" value="${appName}" />
 
+		<if>
+			<isset var="searchTerm" />
+			<then>
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${appName}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="AppManager#APP_NAME" value1="${appName}" />
+
+		<if>
+			<isset var="appStatus" />
+			<then>
+				<execute macro="AppManager#viewStatus">
+					<var name="appName" value="${appName}" />
+					<var name="appStatus" value="${appStatus}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoAppCP">
@@ -69,6 +137,22 @@
 	<command name="viewUninstallAppCP">
 		<var name="key_appName" value="${appName}" />
 
+		<if>
+			<isset var="searchTerm" />
+			<then>
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${appName}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="AssertElementNotPresent" locator1="AppManager#APP_NAME" value1="${appName}" />
+
+		<if>
+			<isset var="consoleText" />
+			<then>
+				<execute function="AssertConsoleTextPresent" value1="${consoleText}" />
+			</then>
+		</if>
 	</command>
 </definition>

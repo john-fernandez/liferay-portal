@@ -25,6 +25,37 @@
 		</if>
 	</tear-down>
 
+	<command name="InstallUninstallApp" priority="5">
+		<property name="portal.acceptance" value="jp" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Apps" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uploadAppCP">
+			<var name="appName" value="test-app-portlet" />
+			<var name="warFileName" value="test-app-portlet-7.1.0.1.war" />
+		</execute>
+
+		<execute macro="AppManager#viewAppCP">
+			<var name="appName" value="test-app-portlet" />
+			<var name="appStatus" value="Active" />
+			<var name="searchTerm" value="test-app-portlet" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="test-app-portlet" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="test-app-portlet" />
+			<var name="searchTerm" value="test-app-portlet" />
+			<var name="consoleText" value="STOPPED test-app-portlet_7.1.0.1" />
+		</execute>
+	</command>
+
 	<command name="ViewIndependentModulesIsNotNestedWithinItself" priority="4">
 		<property name="test.name.skip.portal.instance" value="AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself" />
 
