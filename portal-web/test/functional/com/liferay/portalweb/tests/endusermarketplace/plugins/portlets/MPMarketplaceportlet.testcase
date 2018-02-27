@@ -6,6 +6,8 @@
 	</set-up>
 
 	<command name="MarketplacePortletSmoke" priority="4">
+		<property name="portal.acceptance" value="jp" />
+
 		<var name="appName" value="Marketplace" />
 
 		<execute macro="ProductMenu#gotoPortlet">
