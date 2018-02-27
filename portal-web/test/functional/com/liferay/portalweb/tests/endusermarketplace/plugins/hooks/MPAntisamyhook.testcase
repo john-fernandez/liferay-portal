@@ -6,6 +6,8 @@
 	</set-up>
 
 	<command name="AntiSamyHookSmoke" priority="4">
+		<property name="portal.acceptance" value="jp" />
+
 		<property name="hook.plugins.includes" value="antisamy-hook" />
 
 		<var name="appName" value="AntiSamy" />
