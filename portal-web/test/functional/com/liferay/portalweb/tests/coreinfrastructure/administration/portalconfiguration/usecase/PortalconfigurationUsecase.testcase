@@ -186,6 +186,7 @@
 	</command>
 
 	<command name="ViewDeactivatedPortalInstance" priority="5">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#ViewDeactivatedPortalInstance" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -194,12 +195,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Infrastructure" />
 			<var name="configurationName" value="Inactive Request Handler" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">
@@ -432,6 +431,7 @@
 	</command>
 
 	<command name="ViewVirtualInstanceInheritsSystemSettings" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#ViewVirtualInstanceInheritsSystemSettings" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -440,12 +440,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
 			<var name="configurationName" value="LDAP Auth" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">

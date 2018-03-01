@@ -720,6 +720,7 @@
 	</command>
 
 	<command name="ViewAllFileTypesEnabled" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="PGWebcontentdisplay#ViewAllFileTypesEnabled" />
 		<property name="testray.component.names" value="Web Content Display" />
 
@@ -742,12 +743,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Other" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Connectors" />
 			<var name="configurationName" value="OpenOffice Integration" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">

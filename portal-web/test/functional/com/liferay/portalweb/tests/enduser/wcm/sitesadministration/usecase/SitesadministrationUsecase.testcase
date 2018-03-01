@@ -34,7 +34,7 @@
 	</tear-down>
 
 	<command name="AddOrganizationSitesAndDeactivate" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#AddOrganizationSitesAndDeactivate" />
 		<property name="testray.component.names" value="Site Administration,Training,Users and Organizations" />
 
@@ -44,12 +44,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Infrastructure" />
 			<var name="configurationName" value="Inactive Request Handler" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">
@@ -936,6 +934,7 @@
 	</command>
 
 	<command name="SitesDeactivated" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#SitesDeactivated" />
 		<property name="testray.component.names" value="Site Administration" />
 
@@ -945,12 +944,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Infrastructure" />
 			<var name="configurationName" value="Inactive Request Handler" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">

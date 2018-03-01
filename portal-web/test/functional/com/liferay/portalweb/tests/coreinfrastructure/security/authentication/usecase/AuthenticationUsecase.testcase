@@ -26,6 +26,7 @@
 	</tear-down>
 
 	<command name="ImportLDAPUserWithBlankPassword" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<description message="This is a use case for LPS-65498." />
 
 		<property name="apacheds.blank.user.password.enabled" value="true" />
@@ -78,12 +79,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
 			<var name="configurationName" value="LDAP Import" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">
@@ -119,6 +118,7 @@
 	</command>
 
 	<command name="ViewHiddenSecurityCredential" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ViewHiddenSecurityCredential" />
 		<description message="This is a use case for LPS-73381." />
 
@@ -128,12 +128,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
 			<var name="configurationName" value="LDAP Servers" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#editSecurityCredential">

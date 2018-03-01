@@ -1264,6 +1264,7 @@
 	</command>
 
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddWebContentRemoveGuestViewPermission" />
 		<property name="testray.component.names" value="Permissions,Web Content Administration" />
 
@@ -1273,12 +1274,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
-			<var name="searchTerm" value="Web Content" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Web Content" />
 			<var name="configurationName" value="Web Content" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">
@@ -3521,7 +3520,7 @@
 		<execute macro="IFrame#selectEditAssetFrame" />
 
 		<execute macro="WebContent#selectLocale">
-			<var name="language" value="French (France)" />
+			<var name="language" value="France (Francaise)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

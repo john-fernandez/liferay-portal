@@ -732,6 +732,7 @@
 	</command>
 
 	<command name="UpdateRSSFeedViaAssetpublisher" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="RSS#UpdateRSSFeedViaAssetpublisher" />
 		<property name="testray.component.names" value="Asset Publisher,RSS" />
 
@@ -746,12 +747,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Web Experience" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="RSS" />
 			<var name="configurationName" value="RSS Cache" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="RSSPortlet#updateFeedTime">

@@ -306,6 +306,7 @@
 	</command>
 
 	<command name="TokenBasedSSOSmoke" priority="5">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="Login#TokenBasedSSOSmoke" />
 
 		<execute macro="User#firstLoginPG" />
@@ -316,12 +317,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#viewConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="SSO" />
 			<var name="configurationName" value="Token Based SSO" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">

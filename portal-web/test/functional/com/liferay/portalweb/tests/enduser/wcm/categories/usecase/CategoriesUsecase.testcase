@@ -478,6 +478,7 @@
 	</command>
 
 	<command name="AddSubcategoryConfigureParentCategory" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="CategoriesUsecase#AddSubcategoryConfigureParentCategory" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -486,8 +487,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Assets" />
 			<var name="configurationName" value="Asset Categories Web" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#configureDisplayStyle">
@@ -2269,6 +2272,7 @@
 	</command>
 
 	<command name="ViewFlattenedTreeCategoryNavigationDisplayStyle" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="CategoriesUsecase#ViewFlattenedTreeCategoryNavigationDisplayStyle" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2277,8 +2281,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Assets" />
 			<var name="configurationName" value="Asset Categories Web" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#configureDisplayStyle">
