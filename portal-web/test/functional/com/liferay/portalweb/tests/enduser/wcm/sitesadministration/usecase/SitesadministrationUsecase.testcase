@@ -34,7 +34,7 @@
 	</tear-down>
 
 	<command name="AddOrganizationSitesAndDeactivate" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#AddOrganizationSitesAndDeactivate" />
 		<property name="testray.component.names" value="Site Administration,Training,Users and Organizations" />
 
@@ -934,6 +934,7 @@
 	</command>
 
 	<command name="SitesDeactivated" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="SitesadministrationUsecase#SitesDeactivated" />
 		<property name="testray.component.names" value="Site Administration" />
 

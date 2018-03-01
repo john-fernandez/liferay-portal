@@ -44,6 +44,7 @@
 	</tear-down>
 
 	<command name="ActivateStagingPageVersioningWithCustomDefaultLanguage" priority="5">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage" />
 
 		<execute macro="Navigator#openSiteURL">

@@ -369,6 +369,7 @@
 	</command>
 
 	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize" />
 
 		<execute macro="ProductMenu#gotoPortlet">

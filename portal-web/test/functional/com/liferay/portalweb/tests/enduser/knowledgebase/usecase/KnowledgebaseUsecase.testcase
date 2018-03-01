@@ -1387,6 +1387,7 @@
 	</command>
 
 	<command name="ViewImportedKBArticleWithSourceURLMetadata" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewImportedKBArticleWithSourceURLMetadata" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1542,6 +1543,7 @@
 	</command>
 
 	<command name="ViewKBArticleGitHubSourceURL" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="KnowledgebaseUsecase#ViewKBArticleGitHubSourceURL" />
 
 		<execute macro="Navigator#openURL" />

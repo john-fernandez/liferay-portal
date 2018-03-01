@@ -478,6 +478,7 @@
 	</command>
 
 	<command name="AddSubcategoryConfigureParentCategory" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="CategoriesUsecase#AddSubcategoryConfigureParentCategory" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2271,6 +2272,7 @@
 	</command>
 
 	<command name="ViewFlattenedTreeCategoryNavigationDisplayStyle" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="CategoriesUsecase#ViewFlattenedTreeCategoryNavigationDisplayStyle" />
 
 		<execute macro="ProductMenu#gotoPortlet">

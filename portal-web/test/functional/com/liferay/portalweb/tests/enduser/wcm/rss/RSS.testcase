@@ -732,6 +732,7 @@
 	</command>
 
 	<command name="UpdateRSSFeedViaAssetpublisher" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<property name="test.name.skip.portal.instance" value="RSS#UpdateRSSFeedViaAssetpublisher" />
 		<property name="testray.component.names" value="Asset Publisher,RSS" />
 

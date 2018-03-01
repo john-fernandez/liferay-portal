@@ -1053,6 +1053,7 @@
 	</command>
 
 	<command name="ConfigureAutosave" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<description message="This is a use case for LPS-68418." />
 		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutosave" />
 
@@ -1758,6 +1759,7 @@
 	</command>
 
 	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="4">
+		<property name="portal.acceptance" value="systest" />
 		<description message="This is a use case for LPS-50757." />
 
 		<property name="portal.subrepo" value="false" />
@@ -2001,6 +2003,7 @@
 	</command>
 
 	<command name="EditFormsConfigurationViaSystemSettings" priority="3">
+		<property name="portal.acceptance" value="systest" />
 		<description message="This is a use case for LPS-59749" />
 		<property name="test.name.skip.portal.instance" value="Forms#EditFormsConfigurationViaSystemSettings" />
 
