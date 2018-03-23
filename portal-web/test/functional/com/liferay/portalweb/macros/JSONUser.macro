@@ -58,7 +58,7 @@
 			${portalURL}/api/jsonws/user/add-user \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
-				-d autoPassword=true \
+				-d autoPassword=false \
 				-d password1=test \
 				-d password2=test \
 				-d autoScreenName=false \

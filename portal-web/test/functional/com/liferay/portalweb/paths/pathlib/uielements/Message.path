@@ -249,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_TEXT</td>
+	<td>//span[@class='text-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIP</td>
 	<td>//div[contains(@class,'tooltip-content')]</td>
 	<td></td>
