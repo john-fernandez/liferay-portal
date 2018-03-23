@@ -144,6 +144,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIVATE_PERSONAL_SITE</td>
+	<td>//a[contains(@id,'UserAssociatedData')]/span[contains(.,'Open Dashboard Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_PERSONAL_SITE</td>
+	<td>//a[contains(@id,'UserAssociatedData')]/span[contains(.,'Open Profile Pages')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REFRESH_COUNTS</td>
 	<td>//a[contains(@id,'rangeLink')]</td>
 	<td></td>
