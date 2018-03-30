@@ -1261,7 +1261,7 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<trycatch>
+<!-- 				<trycatch>
 					<try>
 						<mirrors-get
 							dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
@@ -1278,13 +1278,13 @@ place it here: ${app.server.parent.dir}/${app.server.jboss.zip.name}. Then rerun
 this task.
 						</fail>
 					</catch>
-				</trycatch>
+				</trycatch> -->
 			</then>
 		</if>
 
 		<unzip
 			dest="${app.server.parent.dir}"
-			src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+			src="/opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/dependencies/${app.server.jboss.zip.name}"
 		>
 			<mapper
 				from="(jboss-eap-)\d\.\d[\.]?[\d]?(/.*)"
