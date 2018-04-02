@@ -30,4 +30,102 @@
 
 		<execute function="DragAndDrop" locator1="ControlMenuAddPanel#CONTENT_TITLE" locator2="Home#PAGE_COLUMN_1" value1="${assetTitle}" />
 	</command>
+
+	<command name="addDataSet1">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoCP">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPageCP">
+			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<!-- <execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#addPollCP">
+			<var name="permissions" value="true" />
+			<var name="permissionsViewRole" value="Anyone (Guest Role)" />
+			<var name="pollsQuestion" value="What is your favorite Liferay portlet?" />
+			<var name="pollsQuestionChoiceA" value="Blogs" />
+			<var name="pollsQuestionChoiceB" value="Wiki" />
+			<var name="pollsQuestionChoiceC" value="Message Boards" />
+			<var name="pollsQuestionTitle" value="Favorite Liferay Portlet" />
+		</execute> -->
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="addDataSet2">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS">
+			<var name="key_rowEntry" value="FrontPage" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="WikiPage#addInlineImageViaEdit">
+			<var name="navTab" value="Page Attachments" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
 </definition>
