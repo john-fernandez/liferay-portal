@@ -4317,6 +4317,36 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="check-xml-data">
+		<unzip dest="${selenium.output.dir.name}">
+			<fileset dir="${selenium.output.dir.name}">
+				<filename regex="^${zip.filename}([^\s]+).zip$"/>
+			</fileset>
+		</unzip>
+
+		<patternset id="filestotest">
+			<include name="*.xml"/>
+		</patternset>
+
+		<patternset id="filestotest"/> 
+		<property name="filestotest.value" refid="filestotest"/> 
+
+		<for list="${searchTerms}" param="searchTerm">
+			<sequential>
+				<fail message="@{searchTerm} not found!">
+					<condition>
+						<resourcecount when="equal" count="0">
+							<fileset dir="${selenium.output.dir.name}">
+								<patternset refid="filestotest"/>
+								<contains text="@{searchTerm}" />
+							</fileset>
+						</resourcecount>
+					</condition>
+				</fail>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="clean-app-server-deploy-dir">
 		<delete failonerror="false" includeemptydirs="true">
 			<fileset
