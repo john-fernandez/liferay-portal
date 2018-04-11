@@ -1271,7 +1271,7 @@
 	</command>
 
 	<command name="DeleteUser" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="jp" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -1971,7 +1971,7 @@
 	</command>
 
 	<command name="ViewLoginForActivatedUser" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="jp" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
