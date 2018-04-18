@@ -44,7 +44,7 @@
 			set JAVA_OPTS=
 
 			call ${app.server.tcserver.developer.dir}/tcserver install liferay
-			call ${app.server.tcserver.developer.dir}/tcserver run liferay
+			call ${app.server.tcserver.developer.dir}/tcserver start liferay
 
 			set JAVA_OPTS=%JAVA_OPTS_TEMP%
 
@@ -52,7 +52,7 @@
 		</echo>
 
 		<echo file="${app.server.tcserver.bin.dir}/startup.sh">
-			${app.server.tcserver.developer.dir}/./tcserver.sh run liferay
+			${app.server.tcserver.developer.dir}/./tcserver.sh start liferay
 		</echo>
 
 		<chmod
