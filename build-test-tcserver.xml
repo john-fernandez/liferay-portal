@@ -33,6 +33,7 @@
 		</echo>
 
 		<echo file="${app.server.tcserver.bin.dir}/shutdown.sh">
+			${app.server.tcserver.developer.dir}/./tcserver.sh status liferay
 			${app.server.tcserver.developer.dir}/./tcserver.sh stop liferay
 		</echo>
 
