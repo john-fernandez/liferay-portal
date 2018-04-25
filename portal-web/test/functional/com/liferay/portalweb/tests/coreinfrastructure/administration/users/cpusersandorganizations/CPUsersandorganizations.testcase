@@ -1604,14 +1604,14 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<for list="Blogs,Web Content" param="application">
+		<for list="Blogs,Polls" param="application">
 			<execute macro="User#managePublicSiteData">
 				<var name="action" value="Delete" />
 				<var name="application" value="${application}" />
 			</execute>
 		</for>
 
-		<for list="Wiki,Polls" param="application">
+		<for list="Wiki,Web Content" param="application">
 			<execute macro="User#managePublicSiteData">
 				<var name="action" value="Anonymize" />
 				<var name="application" value="${application}" />
@@ -1653,6 +1653,58 @@
 		</execute>
 
 		<execute macro="Blogs#viewNoEntryCP" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Polls" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#NO_ENTRIES" value1="No entries were found." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#cannotViewCP">
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>	
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Bookmarks" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no bookmarks in this folder." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewAuthorCP">
+			<var name="webContentTitle" value="Web Content Title" />
+			<var name="webContentTitle" value="Anonymous" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="WikiPage#viewAuthorCP">
+			<var name="wikiPageTitle" value="FrontPage" />
+			<var name="wikiPageAuthor" value="Anonymous" />
+		</execute>
 	</command>
 
 	<command name="ErrorAddUserScreenNameNumberSiteId" priority="4">

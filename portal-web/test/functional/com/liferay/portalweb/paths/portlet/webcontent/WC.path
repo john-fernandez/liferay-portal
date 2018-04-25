@@ -209,6 +209,11 @@
 </tr>
 <!--ENTRY_LIST-->
 <tr>
+	<td>ENTRY_LIST_AUTHOR</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_LIST_TITLE</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]//a</td>
 	<td></td>
