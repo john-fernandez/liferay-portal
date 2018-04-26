@@ -1992,6 +1992,9 @@
 				<execute macro="User#loginPG">
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />
+					<var name="password" value="${password}" />
+					<var name="resetPassword" value="${resetPassword}" />
+					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="${userLoginEmailAddress}" />
 					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
