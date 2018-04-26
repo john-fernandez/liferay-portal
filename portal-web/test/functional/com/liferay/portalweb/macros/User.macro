@@ -1026,13 +1026,13 @@
 	</command>
 
 	<command name="deactivateCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userFirstName}" />
-		</execute>
-
 		<if>
 			<equals arg1="${deactivateType}" arg2="Actions" />
 			<then>
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${userFirstName}" />
+				</execute>
+
 				<var name="key_rowEntry" value="${userScreenName}" />
 
 				<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
@@ -1044,10 +1044,18 @@
 				<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 
 				<execute macro="Alert#viewSuccessMessage" />
+
+				<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME">
+					<var name="key_userScreenName" value="${screenName}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${deactivateType}" arg2="Deactivate Button" />
 				<then>
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${userFirstName}" />
+					</execute>
+
 					<var name="key_userScreenName" value="${userScreenName}" />
 
 					<execute macro="PortletEntry#selectAll" />
@@ -1057,11 +1065,19 @@
 					<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
 					<execute macro="Alert#viewSuccessMessage" />
+
+					<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME">
+						<var name="key_userScreenName" value="${screenName}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
 				<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 				<then>
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${userFirstName}" />
+					</execute>
+
 					<execute function="Click" locator1="Checkbox#SELECT_ALL" />
 
 					<if>
@@ -1078,6 +1094,22 @@
 					<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME">
 						<var name="key_userScreenName" value="${screenName}" />
 					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${deactivateType}" arg2="Delete Personal Data" />
+				<then>
+					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate User" />
+
+					<execute function="Confirm" value1="Are you sure you want to deactivate the user?" />
+
+					<execute macro="Alert#viewSuccessMessage" />
+
+					<execute function="AssertElementPresent" locator1="Button#DISABLED_BUTTON">
+						<var name="key_button" value="Deactivate User" />
+					</execute>
+
+					<execute function="AssertVisible" locator1="Message#SUCCESS_TEXT" value1="User was successfully deactivated." />
 				</then>
 			</elseif>
 		</if>
