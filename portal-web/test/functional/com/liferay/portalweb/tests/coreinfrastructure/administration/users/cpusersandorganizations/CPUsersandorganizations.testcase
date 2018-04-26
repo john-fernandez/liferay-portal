@@ -1271,6 +1271,8 @@
 	</command>
 
 	<command name="DeletePersonalData" priority="5">
+		<property name="portal.acceptance" value="jp" />
+
 		<execute macro="JSONUser#addUser">
 			<var name="autoPassword" value="false" />
 			<var name="userEmailAddress" value="userea1@liferay.com" />
