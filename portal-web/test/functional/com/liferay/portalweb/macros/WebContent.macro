@@ -1479,6 +1479,16 @@
 		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_AUDIO" />
 	</command>
 
+	<command name="viewAuthorCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="WC#ENTRY_LIST_AUTHOR" value1="${author}" />
+	</command>
+
 	<command name="viewAvailableLanguagesPGViaWCD">
 		<execute function="Click" locator1="Translation#ADD" />
 

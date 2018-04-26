@@ -1276,6 +1276,16 @@
 		<execute function="AssertTextEquals" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="viewAuthorCP">
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD5" value1="${wikiPageAuthor}">
+			<var name="key_rowEntry" value="${wikiPageTitle}" />
+		</execute>
+	</command>
+
 	<command name="viewChildPagePG">
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiChildPageTitle}" />
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiChildPageContent}" />
