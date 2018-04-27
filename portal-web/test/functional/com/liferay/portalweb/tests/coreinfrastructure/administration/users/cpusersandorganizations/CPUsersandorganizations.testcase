@@ -1635,8 +1635,8 @@
 		</execute>
 		
 		<execute macro="User#exportPersonalData">
-			<var name="applicationItemCountPairs" value="Blogs-1,Wiki-1,Documents and Media-1,MB-1" />
-			<var name="assetList" value="Blogs Entry Title,FrontPage,Document_1.doc,MB Thread Message Subject" />
+			<var name="applicationItemCountPairs" value="Blogs-1,Wiki-1,MB-1" />
+			<var name="assetList" value="Blogs Entry Title,FrontPage,MB Thread Message Subject" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
