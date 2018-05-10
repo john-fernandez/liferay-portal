@@ -90,8 +90,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ENTRY_DESCRIPTION_TD5</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ENTRY_ELLIPSIS</td>
 	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ENTRY_TD_2</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>

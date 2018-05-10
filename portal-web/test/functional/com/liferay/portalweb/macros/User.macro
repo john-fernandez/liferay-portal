@@ -781,6 +781,20 @@
 		</if>
 	</command>
 
+	<command name="anonymizeData">
+		<execute function="AssertClickNoError" locator1="Button#ANONYMIZE_DATA" value1="Anonymize Data" />
+
+		<execute function="Confirm" value1="This action anonymize user data is not needed to be reviewed by the Admin User" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="AssertElementPresent" locator1="Button#DISABLED_BUTTON">
+			<var name="key_button" value="Anonymize" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Message#SUCCESS_TEXT" value1="All data was anonymized." />
+	</command>
+
 	<command name="answerPasswordReminder">
 		<if>
 			<condition function="IsElementPresent" locator1="TextInput#ANSWER" />
@@ -1014,6 +1028,24 @@
 		</if>
 	</command>
 
+	<command name="checkDeletedPersonalSites">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/${userScreenName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
+		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/user/${userScreenName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
+		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
+	</command>
+
 	<command name="createAccount">
 		<execute macro="SignInNavigator#gotoCreateAccount" />
 
@@ -1026,13 +1058,13 @@
 	</command>
 
 	<command name="deactivateCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${userFirstName}" />
-		</execute>
-
 		<if>
 			<equals arg1="${deactivateType}" arg2="Actions" />
 			<then>
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${userFirstName}" />
+				</execute>
+
 				<var name="key_rowEntry" value="${userScreenName}" />
 
 				<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
@@ -1044,10 +1076,18 @@
 				<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 
 				<execute macro="Alert#viewSuccessMessage" />
+
+				<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME">
+					<var name="key_userScreenName" value="${screenName}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${deactivateType}" arg2="Deactivate Button" />
 				<then>
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${userFirstName}" />
+					</execute>
+
 					<var name="key_userScreenName" value="${userScreenName}" />
 
 					<execute macro="PortletEntry#selectAll" />
@@ -1057,11 +1097,19 @@
 					<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
 					<execute macro="Alert#viewSuccessMessage" />
+
+					<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME">
+						<var name="key_userScreenName" value="${screenName}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
 				<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 				<then>
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${userFirstName}" />
+					</execute>
+
 					<execute function="Click" locator1="Checkbox#SELECT_ALL" />
 
 					<if>
@@ -1078,6 +1126,22 @@
 					<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME">
 						<var name="key_userScreenName" value="${screenName}" />
 					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${deactivateType}" arg2="Delete Personal Data" />
+				<then>
+					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate User" />
+
+					<execute function="Confirm" value1="Are you sure you want to deactivate the user?" />
+
+					<execute macro="Alert#viewSuccessMessage" />
+
+					<execute function="AssertElementPresent" locator1="Button#DISABLED_BUTTON">
+						<var name="key_button" value="Deactivate User" />
+					</execute>
+
+					<execute function="AssertVisible" locator1="Message#SUCCESS_TEXT" value1="User was successfully deactivated." />
 				</then>
 			</elseif>
 		</if>
@@ -1102,6 +1166,66 @@
 				</if>
 			</then>
 		</if>
+	</command>
+
+	<command name="deletePersonalData">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Delete Personal Data" />
+			<var name="rowEntry" value="${userScreenName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${userFirstName} ${userLastName} - Personal Data Erasure" />
+
+		<execute macro="User#deactivateCP">
+			<var name="deactivateType" value="Delete Personal Data" />
+		</execute>
+
+		<execute macro="User#deletePersonalSites">
+			<var name="portalURL" value="${portalURL}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#reviewApplicationData">
+			<var name="applicationItemCountPairs" value="${applicationItemCountPairs}" />
+		</execute>
+
+		<execute macro="User#anonymizeData" />
+	</command>
+
+	<command name="deletePersonalSites">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#openPersonalSites">
+			<var name="siteName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="Button#DELETE_PERSONAL_SITE" value1="Delete Personal Site" />
+
+		<execute function="Confirm" value1="Are you sure you want to delete the user's personal site?" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="AssertElementPresent" locator1="Button#DISABLED_BUTTON">
+			<var name="key_button" value="Delete Personal Site" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Message#SUCCESS_TEXT" value1="Personal site was successfully forgotten." />
 	</command>
 
 	<command name="deleteProfilePictureViaMyAccount">
@@ -1140,6 +1264,20 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="deleteUser">
+		<execute function="AssertClickNoError" locator1="Button#DELETE_USER" value1="Delete User" />
+
+		<execute function="Confirm" value1="Are you sure you want to delete the user?" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="AssertElementPresent" locator1="Button#DISABLED_BUTTON">
+			<var name="key_button" value="Delete User" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Message#SUCCESS_TEXT" value1="User was successfully deleted." />
 	</command>
 
 	<command name="editAnnouncementNotificationsViaMyAccount">
@@ -1928,6 +2066,9 @@
 				<execute macro="User#loginPG">
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />
+					<var name="password" value="${password}" />
+					<var name="resetPassword" value="${resetPassword}" />
+					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="${userLoginEmailAddress}" />
 					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
@@ -1971,6 +2112,49 @@
 		<execute macro="UserBar#signOut" />
 	</command>
 
+	<command name="managePublicSiteData">
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS">
+			<var name="key_rowEntry" value="${application}" />
+		</execute>
+
+		<if>
+			<isset var="${resourceTitle}" />
+			<then>
+				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
+					<var name="key_menuItem" value="View" />
+				</execute>
+
+				<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS">
+					<var name="key_rowEntry" value="${resourceTitle}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="${action}">
+			<var name="key_menuItem" value="${action}" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="openPersonalSites">
+		<execute function="AssertClick" locator1="Link#PUBLIC_PERSONAL_SITE" value1="Open Profile Pages" />
+
+		<execute function="SelectWindow" locator1="Welcome - ${userFirstName} ${userLastName} - ${siteName}" />
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/${userScreenName}" />
+
+		<execute function="Close#closeWindow" locator1="Welcome - ${userFirstName} ${userLastName} - ${siteName}" />
+
+		<execute function="AssertClick" locator1="Link#PRIVATE_PERSONAL_SITE" value1="Open Dashboard Pages" />
+
+		<execute function="SelectWindow" locator1="Welcome - ${userFirstName} ${userLastName} - ${siteName}" />
+
+		<execute function="AssertLocation#assertPartialLocation" value1="user/${userScreenName}" />
+
+		<execute function="Close#closeWindow" locator1="Welcome - ${userFirstName} ${userLastName} - ${siteName}" />
+	</command>
+
 	<command name="resetPassword">
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
@@ -2007,6 +2191,21 @@
 				<execute function="AssertElementNotPresent" locator1="TextInput#ENTER_AGAIN" />
 			</then>
 		</if>
+	</command>
+
+	<command name="reviewApplicationData">
+		<execute function="AssertClickNoError" locator1="Button#REVIEW" value1="Review" />
+
+		<for list="${applicationItemCountPairs}" param="applicationItemCountPair">
+			<var method="StringUtil#extractFirst('${applicationItemCountPair}', '-')" name="application" />
+			<var method="StringUtil#extractLast('${applicationItemCountPair}', '-')" name="itemCount" />
+
+			<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_TD_2" value1="${itemCount}">
+				<var name="key_rowEntry" value="${application}" />
+			</execute>
+
+			<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="Pending" />
+		</for>
 	</command>
 
 	<command name="searchCP">
