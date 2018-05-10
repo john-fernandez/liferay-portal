@@ -18,6 +18,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DATA_EXPORT-->
+<tr>
+	<td>DATA_EXPORT_STATUS</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//span[contains(text(),'Successful')]</td>
+	<td></td>
+</tr>
 <!--EDIT_TABS-->
 <tr>
 	<td>MISCELLANEOUS</td>

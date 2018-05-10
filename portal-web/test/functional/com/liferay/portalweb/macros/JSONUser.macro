@@ -58,7 +58,7 @@
 			${portalURL}/api/jsonws/user/add-user \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
-				-d autoPassword=true \
+				-d autoPassword=${autoPassword} \
 				-d password1=test \
 				-d password2=test \
 				-d autoScreenName=false \
@@ -142,6 +142,15 @@
 	<command name="addUser">
 		<if>
 			<not>
+				<isset var="autoPassword" />
+			</not>
+			<then>
+				<var name="autoPassword" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<not>
 				<isset var="userEmailAddress" />
 			</not>
 			<then>
@@ -177,6 +186,7 @@
 		</if>
 
 		<execute macro="JSONUser#_addUser">
+			<var name="autoPassword" value="${autoPassword}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />

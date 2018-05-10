@@ -1014,6 +1014,10 @@
 		</if>
 	</command>
 
+	<command name="checkXMLData">
+		<execute function="AntCommand" locator1="build-test.xml" value1="check-xml-data -Dzip.filename=&quot;${zipFileName}&quot; -DsearchTerms=&quot;${searchTerms}&quot;" />
+	</command>
+
 	<command name="createAccount">
 		<execute macro="SignInNavigator#gotoCreateAccount" />
 
@@ -1140,6 +1144,23 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="downloadUserData">
+		<for list="${applicationItemCountPairs}" param="applicationItemCountPair">
+			<var method="StringUtil#extractFirst('${applicationItemCountPair}', '-')" name="application" />
+
+			<execute function="AssertTextEquals" locator1="UsersAndOrganizations#DATA_EXPORT_STATUS" value1="Successful">
+				<var name="key_rowEntry" value="${application}" />
+			</execute>
+
+			<execute macro="LexiconEntry#gotoEntryMenuItem">
+				<var name="menuItem" value="Download (0KB)" />
+				<var name="rowEntry" value="${application}" />
+			</execute>
+
+			<execute function="DownloadTempFile" />
+		</for>
 	</command>
 
 	<command name="editAnnouncementNotificationsViaMyAccount">
@@ -1479,6 +1500,47 @@
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECT" value1="${userSuffix}" />
 
 		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="exportPersonalData">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Export Personal Data" />
+			<var name="rowEntry" value="${userScreenName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${userFirstName} ${userLastName} - Export Personal Data" />
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<for list="${applicationItemCountPairs}" param="applicationItemCountPair">
+			<var method="StringUtil#extractFirst('${applicationItemCountPair}', '-')" name="application" />
+			<var method="StringUtil#extractLast('${applicationItemCountPair}', '-')" name="itemCount" />
+
+			<var name="key_rowEntry" value="${application}" />
+
+			<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="${itemCount}" />
+
+			<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" />
+		</for>
+
+		<execute function="AssertClickNoError" locator1="Button#EXPORT" value1="Export" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="User#downloadUserData">
+			<var name="applicationItemCountPairs" value="${applicationItemCountPairs]" />
+		</execute>
+
+		<execute macro="User#checkXMLData">
+			<var name="searchTerms" value="${assetList}" />
+			<var name="zipFileName" value="UAD_${userfn1} ${userfln1}" />
+		</execute>
 	</command>
 
 	<command name="firstLoginPG" summary="Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first">
@@ -1928,6 +1990,9 @@
 				<execute macro="User#loginPG">
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />
+					<var name="password" value="${password}" />
+					<var name="resetPassword" value="${resetPassword}" />
+					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="${userLoginEmailAddress}" />
 					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
